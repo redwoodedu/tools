@@ -40,7 +40,7 @@
 ```
 [format],[video id]
 start_time,end_time
-...
+ ...
 ```
 
 跟据格式(format)不同，时间的表示方法也有所区别：
