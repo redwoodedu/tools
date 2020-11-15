@@ -1,7 +1,9 @@
 import os, argparse, datetime, time
+from pytube import YouTube
 
 parser = argparse.ArgumentParser(description='Cut video based on provided time segments.')
-parser.add_argument('input', metavar='input', type=str, help='input video')
+#Download youtube video automatically, so skip the input file
+#parser.add_argument('input', metavar='input', type=str, help='input video')
 parser.add_argument('timestamps', metavar='timefile', type=str, help='timestamps file')
 parser.add_argument('--output', '-o', metavar='output', type=str, default='out.mp4', help='output video')
 
@@ -23,10 +25,13 @@ def main():
 	args = parser.parse_args()
 	segments_str = ''
 	formats = ['seconds', 'HHMMSSmmm']
+	yt_str = 'https://youtube.com/watch?v='
 	
 	with open(args.timestamps) as f:
 		lines = f.readlines()
-		f = lines[0].strip().split(',')[0]
+		head = lines[0].strip().split(',')
+		f = head[0]
+		yt_id = head[1]
 		if f == formats[1]:
 			val = time2sec(lines[1].strip())
 		else:
@@ -39,8 +44,16 @@ def main():
 				val = l.strip()
 			segments_str = segments_str + '+between(t,' + val + ')'
 
+	yt_url = yt_str+yt_id
+	YouTube(yt_url).streams.get_audio_only(subtype='mp4').download(output_path='download',  filename='audio')
+	YouTube(yt_url).streams.filter(only_audio=False, subtype='mp4').get_highest_resolution().download(output_path='download',  filename='video')
+
+	ffmpeg_merge = 'ffmpeg -i download/video.mp4 -i download/audio.mp4 -c copy download/full.mp4'
+	print(ffmpeg_merge)
+	os.system(ffmpeg_merge)
+
 	print(segments_str)
-	ffmpeg_cmd = 'ffmpeg -i "' + args.input + '" -vf "select=\'' + segments_str + '\',setpts=N/FRAME_RATE/TB" -af "aselect=\'' + segments_str + '\',asetpts=N/SR/TB" "' + args.output + '"'
+	ffmpeg_cmd = 'ffmpeg -i download/full.mp4 -vf "select=\'' + segments_str + '\',setpts=N/FRAME_RATE/TB" -af "aselect=\'' + segments_str + '\',asetpts=N/SR/TB" "' + args.output + '"'
 
 	print(ffmpeg_cmd)
 	os.system(ffmpeg_cmd)

@@ -60,12 +60,14 @@ start_time,end_time
 
 **需下载[ffmpeg](https://ffmpeg.org/download.html)，并将其添加至系统路径，即在系统命令行/终端中输入ffmpeg可找到此命令**
 
+**请安装最新版本的pytube `pip install git+https://github.com/nficano/pytube.git`**
+
 使用以下命令，可以根据时间戳剪辑成视频：
 ```
-python cutVideoByTimestamps.py 原视频 时间戳文件 [-o 输出文件]
+python cutVideoByTimestamps.py 时间戳文件 [-o 输出文件]
 ```
 
-默认输出文件为当前文件夹`out.mp4`。
+此脚本将自动下载Youtube视频，默认输出文件为当前文件夹`out.mp4`。
 
 ## DEMO
 
@@ -75,7 +77,7 @@ python cutVideoByTimestamps.py 原视频 时间戳文件 [-o 输出文件]
 
 ## TODO
 
-* 快速剪辑可支持下载Youtube视频选项
+* ~~快速剪辑可支持下载Youtube视频选项~~
 * ~~支持本地视频时间戳制作~~(碍于browsers的安全设置，这个基本是无法使用静态网页实现的）
 
 
