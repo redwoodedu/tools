@@ -76,7 +76,7 @@ python cutVideoByTimestamps.py 原视频 时间戳文件 [-o 输出文件]
 ## TODO
 
 * 快速剪辑可支持下载Youtube视频选项
-* 支持本地视频时间戳制作
+* ~~支持本地视频时间戳制作~~(碍于browsers的安全设置，这个基本是无法使用静态网页实现的）
 
 
 
