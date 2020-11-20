@@ -16,12 +16,21 @@
       <link href="mdb-4.19.1/css/style.css" rel="stylesheet">
       <!-- MDBootstrap Datatables  -->
       <link href="mdb-4.19.1/css/addons/datatables2.min.css" rel="stylesheet">
+      <!-- https://github.com/hgoebl/mobile-detect.js -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.4/mobile-detect.min.js"></script>
       <script>
          const queryString = window.location.search;
          window.onload = function() {
-         // Unfocus the IFrame player
-         document.getElementById("player").blur();
+             // Unfocus the IFrame player
+             document.getElementById("player").blur();
          };
+         var md = new MobileDetect(window.navigator.userAgent);
+         function relativeRedir(redir){
+            location.pathname = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+redir);
+         }
+         if (md.mobile()) {
+            relativeRedir("nomobile.html");
+         }
       </script>
       <style>
          body {
