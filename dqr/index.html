@@ -27,7 +27,7 @@
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="main.js"></script>
   <script type="text/javascript">
-    var link = $('<a/>'); //will be updated in main
+    var link = $('<a/>'); //will be updated in main, in case redirect fails
     main().then(()=>{
       $("#url").append(link);
       setTimeout(function(){
